@@ -3,21 +3,21 @@
 
 //  Local Imports
 //  Local Imports -> Graphic
-import PiePlotRecharts from "../libraries/recharts/BarPlot";
+import PiePlotRecharts from "../libraries/recharts/PiePlot";
 //  Local Imports -> Utils
-import { WAITING_ADAPT } from "../utils/text/TextInfo";
+import { WAITING_ADAPT } from "../utils/text/TextInfo-pt";
 import { drawerOptions } from "../utils/options/OptionsDrawer";
-import { getGeneralOptions } from "../utils/options/OptionsGeneral";
-import { getLabelListOptions } from "../utils/options/OptionsLabelList";
-import { getLegendOptions } from "../utils/options/OptionsLegend";
-import { getAxesOptions } from "../utils/options/OptionsAxes";
-import { getMarginOptions } from "../utils/options/OptionsMargin";
-import { getColorOptions } from "../utils/options/OptionsColor";
+import { getGeneralOptions } from "../utils/options/DrawerSegments/OptionsGeneral";
+import { getLabelListOptions } from "../utils/options/DrawerSegments/OptionsLabelList";
+import { getLegendOptions } from "../utils/options/DrawerSegments/OptionsLegend";
+import { getMarginOptions } from "../utils/options/DrawerSegments/OptionsMargin";
+import { getColorOptions } from "../utils/options/DrawerSegments/OptionsColor";
+import { getRadiusOptions } from "../utils/options/DrawerSegments/OptionsRadius";
+import { getPercentOptions } from "../utils/options/DrawerSegments/OptionsPercent";
 
-import { VALUE_GRID, VALUE_GRID_HORIZONTAL, VALUE_GRID_VERTICAL, VALUE_GRID_STROKE, VALUE_GRID_OPACITY,
-        VALUE_LABELLIST, VALUE_LABELLIST_POSITION, VALUE_LABELLIST_OFFSET,VALUE_LABELLIST_ANGLE, VALUE_LABELLIST_SIMPLIFY,
+import { VALUE_LABELLIST, VALUE_LABELLIST_ANGLE, VALUE_LABELLIST_SIMPLIFY,
         VALUE_LEGEND, VALUE_LEGEND_POS, VALUE_LEGEND_ALIGN, 
-        VALUE_COLOR, VALUE_SIMPLIFY, VALUE_HEIGHT, VALUE_OPACITY, VALUE_YTICK,
+        VALUE_COLOR_OBJ, VALUE_HEIGHT, VALUE_OPACITY,
         VALUE_MARGIN_TOP, VALUE_MARGIN_BOTTTOM, VALUE_MARGIN_LEFT, VALUE_MARGIN_RIGHT} from "../utils/Conf";
 
 //  External Imports
@@ -32,19 +32,26 @@ export default class PiePlotComponent extends React.Component{
             options: {
                 //  General
                 height: VALUE_HEIGHT,
-                //  Axes -> Y axis
-                yTick: VALUE_YTICK,
-                simplify: VALUE_SIMPLIFY,
-                //  Axes -> X axis
+                percent: false,
+                decimal_percent: 2,
                 order: 0,
+                //  Radius
+                autoRadius: true,
+                innerRadius: 0,
+                outerRadius: 70,
+                spacingRadius: 0,
                 //  Legend
                 legend: VALUE_LEGEND,
                 legend_pos: VALUE_LEGEND_POS,
                 legend_align: VALUE_LEGEND_ALIGN,
+                legend_direction: 'horizontal', 
                 //  Label List
                 labelList: VALUE_LABELLIST,
+                labelList_angle: VALUE_LABELLIST_ANGLE,
+                labelList_simplify: VALUE_LABELLIST_SIMPLIFY,
                 //  Color
-                colors: VALUE_COLOR,
+                colors: [...VALUE_COLOR_OBJ['color']],
+                colors_lock: true,
                 opacity: VALUE_OPACITY,
                 //  Margin
                 margin_top: VALUE_MARGIN_TOP,
@@ -60,18 +67,36 @@ export default class PiePlotComponent extends React.Component{
             sidebarPosOpen: false,
             anchorEl: null,
 
-            //  Color
-            displayColorPicker: Array(1).fill(false),
-
             //  Data 
             data: [...this.props.data.data],
+
+            //  Color
+            displayColorPicker: Array(this.props.data.data.length).fill(false),
 
             //  Change Counter
             oldCounter: 0,
             counter: 0,
 
             needAdapt: false,
+
+            animation: true,
+            animationFlag: false,
+
+            colors: VALUE_COLOR_OBJ['color']
         };
+    }
+
+    componentDidUpdate(){
+        if(this.state.colors !== VALUE_COLOR_OBJ['color']){
+            this.setState({colors: VALUE_COLOR_OBJ['color']})
+        }
+    }
+
+    turnAnimationOff = () => {
+        if(this.state.animation && !this.state.animationFlag){
+            this.setState({animationFlag: true});
+            this.setState({animation: false});
+        }
     }
 
     componentDidMount(){
@@ -90,12 +115,13 @@ export default class PiePlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,false,false)}
-                            {getAxesOptions(this,true,true)}
-                            {getLabelListOptions(this)}
-                            {getLegendOptions(this)}
+                            {getGeneralOptions(this,false,false,true,false,false)}
+                            {getPercentOptions(this)}
+                            {getLabelListOptions(this,false)}
+                            {getLegendOptions(this, true)}
+                            {getRadiusOptions(this)}
                             {getMarginOptions(this)}
-                            {getColorOptions(this,1)}
+                            {getColorOptions(this,this.props.data.data.length,false)}
            
         </React.Fragment>;
         return drawerOptions(this, this.props.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
@@ -116,7 +142,9 @@ export default class PiePlotComponent extends React.Component{
                         data={this.state.data} 
                         header={this.props.data.header}
                         options={this.state.options}
-            />;
+                        animation={[this.state.animation,this.turnAnimationOff]}
+                        colors={this.state.colors}
+                    />; 
         }
         return content;
     }

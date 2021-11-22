@@ -2,19 +2,19 @@
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, List, Zoom, FormControlLabel, Grid, Slider, Input } from '@material-ui/core';
 
-import { ENTER_DELAY, LEAVE_DELAY, TT_MARGIN_TOP, TT_MARGIN_BOTTOM, TT_MARGIN_LEFT, TT_MARGIN_RIGHT } from '../text/Tooltips';
-import { SLIDER_SIZE, L_MARGIN_MIN, L_MARGIN_MAX } from '../Conf';
-import { changeSlider, changeInput } from './OptionsInputs';
+import { ENTER_DELAY, LEAVE_DELAY } from '../../text/Tooltips';
+import { LANGUAGE, LANGUAGE_FILES, SLIDER_SIZE, L_MARGIN_MIN, L_MARGIN_MAX, TOP_PADDING, BOT_PADDING } from '../../Conf';
+import { changeSlider, changeInput } from '../OptionsInputs';
 
 export const getMarginOptions = (self) => {
     return <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon/>} id="acor_cor">
-                    Margem
+                    {LANGUAGE_FILES[LANGUAGE['current']].LABEL_MARGIN}
                 </AccordionSummary>
                 <AccordionDetails>
                     <List key={'margin_key'}>
-                        <Tooltip TransitionComponent={Zoom} arrow title={TT_MARGIN_TOP} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                <FormControlLabel control={<Grid container spacing={2} alignItems="center">
+                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_MARGIN_TOP} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                <FormControlLabel style={{paddingBottom:BOT_PADDING}} control={<Grid container spacing={2} alignItems="center">
                                         <Grid item xs>
                                             <Slider style={{width:SLIDER_SIZE}}
                                                 value={self.state.options.margin_top}
@@ -33,15 +33,15 @@ export const getMarginOptions = (self) => {
                                             />
                                         </Grid>
                                     </Grid>}
-                                    label="Topo"
+                                    label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_MARGIN_TOP}
                                     labelPlacement="top"
                                 />
                         </Tooltip>
 
                         <Divider/>
 
-                        <Tooltip TransitionComponent={Zoom} arrow title={TT_MARGIN_BOTTOM} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                <FormControlLabel control={<Grid container spacing={2} alignItems="center">
+                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_MARGIN_BOTTOM} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                <FormControlLabel style={{paddingTop:TOP_PADDING, paddingBottom:BOT_PADDING}} control={<Grid container spacing={2} alignItems="center">
                                         <Grid item xs>
                                             <Slider style={{width:SLIDER_SIZE}}
                                                 value={self.state.options.margin_bottom}
@@ -60,15 +60,15 @@ export const getMarginOptions = (self) => {
                                             />
                                         </Grid>
                                     </Grid>}
-                                    label="Fundo"
+                                    label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_MARGIN_BOTTOM}
                                     labelPlacement="top"
                                 />
                         </Tooltip>
 
                         <Divider/>
 
-                        <Tooltip TransitionComponent={Zoom} arrow title={TT_MARGIN_RIGHT} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                <FormControlLabel control={<Grid container spacing={2} alignItems="center">
+                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_MARGIN_RIGHT} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                <FormControlLabel style={{paddingTop:TOP_PADDING, paddingBottom:BOT_PADDING}} control={<Grid container spacing={2} alignItems="center">
                                         <Grid item xs>
                                             <Slider style={{width:SLIDER_SIZE}}
                                                 value={self.state.options.margin_right}
@@ -87,15 +87,15 @@ export const getMarginOptions = (self) => {
                                             />
                                         </Grid>
                                     </Grid>}
-                                    label="Direita"
+                                    label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_MARGIN_RIGHT}
                                     labelPlacement="top"
                                 />
                         </Tooltip>
 
                         <Divider/>
 
-                        <Tooltip TransitionComponent={Zoom} arrow title={TT_MARGIN_LEFT} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                <FormControlLabel control={<Grid container spacing={2} alignItems="center">
+                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_MARGIN_LEFT} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                <FormControlLabel style={{paddingTop:TOP_PADDING}} control={<Grid container spacing={2} alignItems="center">
                                         <Grid item xs>
                                             <Slider style={{width:SLIDER_SIZE}}
                                                 value={self.state.options.margin_left}
@@ -114,7 +114,7 @@ export const getMarginOptions = (self) => {
                                             />
                                         </Grid>
                                     </Grid>}
-                                    label="Esquerda"
+                                    label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_MARGIN_LEFT}
                                     labelPlacement="top"
                                 />
                         </Tooltip>

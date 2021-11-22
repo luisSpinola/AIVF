@@ -7,9 +7,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-
+import MenuIcon from '@material-ui/icons/Menu';
+import { TOP_PADDING, BOT_PADDING } from "../Conf";
 
 export const closeDrawer = (self) => {
     self.props.options[1](false);
@@ -32,13 +32,13 @@ export const drawerOptions = (self, plotSelection, sidebarPosOpen, anchorEl, opt
 export const showOptionsDrawer = (sidebarOpen, selector, options, bigTitle, anchor, self) => {
     return <Drawer anchor={anchor} ModalProps={{disableEnforceFocus:true, hideBackdrop:true}} variant="persistent" open={sidebarOpen} onClose={() => closeDrawer(self)}>
                 <List key={"options_options"}>
-                    <ListItem button key={'back_button'}>
+                    <ListItem key={'back_button'}>
                         <IconButton onClick={() => closeDrawer(self)}>
                             <ChevronRightIcon/>
                         </IconButton>
                         {bigTitle}
                     </ListItem>
-                    <Divider key={'divider_geral_1'}/>
+                    <Divider/>
                     <ListItem alignItems={'center'} key={'selector'}>
                         {selector}
                     </ListItem>
@@ -50,31 +50,25 @@ export const showOptionsDrawer = (sidebarOpen, selector, options, bigTitle, anch
 
 export const bigTitleGenerator = (sidebarPosOpen1, anchorEl, self, changeParentPos) => {
     return <React.Fragment key={"options_title"}>
-                <Button
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={(e) => sidebarPosOpen(e, self)}
+                <div style={{marginLeft: '55%'}}>
+                    <IconButton onClick={(e) => sidebarPosOpen(e, self)}><MenuIcon/></IconButton>
+                    <Menu
+                        anchorEl={anchorEl}
+                        id="simple-menu"
+                        keepMounted
+                        open={sidebarPosOpen1}
+                        onClose={() => sidebarPosClose(self)}
                     >
-                    Personalização
-                </Button>
-                <Menu
-                    anchorEl={anchorEl}
-                    id="simple-menu"
-                    keepMounted
-                    open={sidebarPosOpen1}
-                    onClose={() => sidebarPosClose(self)}
-                >
-                    <MenuItem key={'right'} onClick={() => sidebarPosCloseInput('right', self, changeParentPos)}>Direita</MenuItem>
-                    <MenuItem key={'left'} onClick={() => sidebarPosCloseInput('left', self, changeParentPos)}>Esquerda</MenuItem>
-                    <MenuItem key={'bottom'} onClick={() => sidebarPosCloseInput('bottom', self, changeParentPos)}>Baixo</MenuItem>
-                    <MenuItem key={'top'} onClick={() => sidebarPosCloseInput('top', self, changeParentPos)}>Top</MenuItem>
-                </Menu>
+                        <MenuItem key={'right'} onClick={() => sidebarPosCloseInput('right', self, changeParentPos)}>Direita</MenuItem>
+                        <MenuItem key={'left'} onClick={() => sidebarPosCloseInput('left', self, changeParentPos)}>Esquerda</MenuItem>
+                    </Menu>
+                </div>
             </React.Fragment>
 }
 
 export const getGraphSelection = (fullArray) => {
     let selectionItems = getGraphItemsSelection(fullArray[1]);
-    return <div><Select style={{width:'16rem'}} value={fullArray[0]} onChange={fullArray[2]}>
+    return <div style={{paddingTop: TOP_PADDING, paddingBottom: BOT_PADDING, width:'16rem'}}><Select style={{width:'16rem'}} value={fullArray[0]} onChange={fullArray[2]}>
                     {selectionItems}
                 </Select></div>
 }

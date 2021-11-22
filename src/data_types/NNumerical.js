@@ -3,10 +3,10 @@
 
 //  Local Imports
 //  Local Imports -> Graphic Components
-import BarPlotComponent from '../graph_components/BarPlotComponent';
-import LinePlotComponent from '../graph_components/LinePlotComponent';
-import AreaPlotComponent from '../graph_components/AreaPlotComponent';
-import PiePlotComponent from '../graph_components/PiePlotComponent';
+import MultiBarPlotComponent from '../graph_components/MultiBarPlotComponent';
+import MultiLinePlotComponent from '../graph_components/MultiLinePlotComponent';
+import MultiAreaPlotComponent from '../graph_components/MultiAreaPlotComponent';
+
 //  Local Imports -> Utils
 import { ERROR_SELECTED_DEFAULT } from '../utils/text/TextInfo-pt';
 
@@ -14,11 +14,11 @@ import { ERROR_SELECTED_DEFAULT } from '../utils/text/TextInfo-pt';
 //  External Imports -> React
 import React from "react";
 
-export default class OneNumerical extends React.Component{
+export default class NNumerical extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            plots:["Gráfico de Barras", "Gráfico de Setores", "Gráfico de Linha", "Gráfico de Área"],
+            plots:["Gráfico de Linha", "Gráfico de Área", "Gráfico de Barras"],
             selected: this.props.selected,
             sidebarPos: 'right'
         };
@@ -27,26 +27,20 @@ export default class OneNumerical extends React.Component{
     chooseGraph = () => {
         switch(this.state.selected){
             case 0:
-                return <BarPlotComponent 
+                return <MultiLinePlotComponent 
                         data={this.props.data} 
                         options={this.props.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             case 1:
-                return <PiePlotComponent 
+                return <MultiAreaPlotComponent 
                         data={this.props.data} 
                         options={this.props.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
-           
             case 2:
-                return <LinePlotComponent 
+                return <MultiBarPlotComponent 
                         data={this.props.data} 
                         options={this.props.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
-            case 3:
-                return <AreaPlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
-                        plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;       
             default:
                 return <div>{ERROR_SELECTED_DEFAULT}</div>
         }

@@ -1,28 +1,38 @@
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Divider, Accordion, AccordionSummary, AccordionDetails, List, FormControlLabel, Grid, Slider, Input } from '@material-ui/core';
+import {Divider, Tooltip, Zoom, Accordion, AccordionSummary, AccordionDetails, List, FormControlLabel, Grid, Slider, Input, Switch } from '@material-ui/core';
 
-import { SLIDER_SIZE } from '../Conf';
-import { changeSlider, changeInput } from './OptionsInputs';
-
+import { LANGUAGE, LANGUAGE_FILES, SLIDER_SIZE, VALUE_COLOR_OBJ } from '../../Conf';
+import { changeSlider, changeInput, changeCheckbox } from '../OptionsInputs';
+import { SWITCH_PADDING, BOT_PADDING, TOP_PADDING } from '../../Conf';
+import { ENTER_DELAY, LEAVE_DELAY } from '../../text/Tooltips';
 import { SketchPicker } from 'react-color';
 import reactCSS from 'reactcss';
 
-export const getColorOptions = (self,size) => {
+export const getColorOptions = (self,size,opacity) => {
     let styles = colorStyles(self.state.options.colors,size);
     let colorsDisplay = colorsDisplayFunc(self, styles);
 
     return <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon/>} id="acor_cor">
-                    Cor
+                {LANGUAGE_FILES[LANGUAGE['current']].LABEL_COLOR}
                 </AccordionSummary>
                 <AccordionDetails>
                     <List key={'colors_key'}>
-                        {colorsDisplay}
+                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_COLOR_LOCK} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                            <FormControlLabel style={{paddingLeft: SWITCH_PADDING, paddingBottom: BOT_PADDING}}  control={<Switch size="small" onChange={(e) => changeCheckbox(self, e, "colors_lock")} checked={self.state.options.colors_lock} color="primary" />}
+                                    label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_COLOR_LOCK}
+                                    labelPlacement="end"
+                            />
+                        </Tooltip>
 
                         <Divider/>
 
-                        <FormControlLabel control={<Grid container spacing={2}>
+                        <div style={{paddingLeft: '0.5rem', paddingTop: TOP_PADDING, paddingBottom: BOT_PADDING}}>
+                            {colorsDisplay}
+                        </div>
+                        
+                        {opacity && <span><Divider/><FormControlLabel style={{paddingTop: TOP_PADDING}} control={<Grid container spacing={2}>
                                 <Grid item xs>
                                     <Slider style={{width:SLIDER_SIZE}}
                                         value={self.state.options.opacity}
@@ -43,7 +53,7 @@ export const getColorOptions = (self,size) => {
                                 </Grid>}
                                 label="Opacidade"
                                 labelPlacement="top"
-                            />
+                            /></span>}
                     </List>
                 </AccordionDetails>
             </Accordion>
@@ -95,13 +105,12 @@ export const colorsDisplayFunc = (self,styles) => {
             { 
                 self.state.displayColorPicker[i] ? <div  style={styles[i].popover }>
                 <div style={ styles[i].cover } onClick={() => handleClose(self, i) }/>
-                    <SketchPicker  presetColors={['#7dba00','#5594b4','#f7913e','#796662','#423b67','#fa4d56','#570408','#198038']} disableAlpha={true} color={ self.state.options.colors[i] } onChange={(color) => handleChange(self, color, i) } />
+                    <SketchPicker presetColors={VALUE_COLOR_OBJ['color']} disableAlpha={true} color={ self.state.options.colors[i] } onChange={(color) => handleChange(self, color, i) } />
                 </div> : null 
             }
         </span>)
     }
-    //return <div style={{display: 'flex', justifyContent: 'center'}}>{colors}</div>;
-    return colors;
+    return <div style={{maxWidth: '15rem'}}>{colors}</div>;
 }
 
 export const handleColorClick = (self, i) => {

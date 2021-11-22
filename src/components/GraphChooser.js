@@ -4,14 +4,15 @@
 //  Local Imports
 //  Local Imports -> Data Types
 import OneNumerical from "../data_types/OneNumerical";
+import NNumerical from "../data_types/NNumerical";
+import DoubleNumerical from "../data_types/DoubleNumerical";
 //  Local Imports -> Utils
-import { WAITING_OPTIONS } from "../utils/text/TextInfo";
+import { WAITING_OPTIONS } from "../utils/text/TextInfo-pt";
 
 //  External Imports
 import React from "react";
 //  External Imports -> Material-UI
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 export default class GraphChooser extends React.Component{
     constructor(props){
         super(props);
@@ -20,7 +21,7 @@ export default class GraphChooser extends React.Component{
             dataType: null,
             data: null,
             labels: null,
-            selected: 0
+            selected: 0,
         };
     }
 
@@ -47,7 +48,20 @@ export default class GraphChooser extends React.Component{
                                 selected={this.state.selected} 
                                 identifier={this.props.identifier}
                                 data={this.props.data}
-                                legend={this.state.legend}
+                                options={this.props.options}
+                                />;
+                case "n_numerical":
+                    return <NNumerical 
+                                selected={this.state.selected} 
+                                identifier={this.props.identifier}
+                                data={this.props.data}
+                                options={this.props.options}
+                                />;
+                case "double_numerical":
+                    return <DoubleNumerical 
+                                selected={this.state.selected} 
+                                identifier={this.props.identifier}
+                                data={this.props.data}
                                 options={this.props.options}
                                 />;
                 default:

@@ -6,51 +6,47 @@ import { Button } from '@material-ui/core';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 
-export default function OneNumericalExample(props) {
+export default function NNumericalExample(props) {
 
     const [options, setOptions] = useState(false);
 
     const data = {
         "header":{ //  Object
-            "type": "one_numerical", // Data Type
+            "type": "n_numerical", // Data Type
             "id": ["id_name"],       // Identifier of the field containing the name (x axis)
-            "value": ["value_name"]  // Identifier of the field containing the numerical value (y axis)
+            "value": ["value_name1","value_name2","value_name3"]  // Identifier of the field containing the numerical value (y axis)
         },
         "data": [ //  Array of Objects  
             { 
                 "id_name": "Valor 1",
-                "value_name": 8000
+                "value_name1": 8000,
+                "value_name2": 4000,
+                "value_name3": 6000
             },
             { 
                 "id_name": "Valor 2",
-                "value_name": 5000
+                "value_name1": 5000,
+                "value_name2": 7000,
+                "value_name3": 9000
             },
             { 
                 "id_name": "Valor 3",
-                "value_name": 13000
+                "value_name1": 13000,
+                "value_name2": 4000,
+                "value_name3": 2000
             },
             { 
                 "id_name": "Valor 4",
-                "value_name": 7000
+                "value_name1": 7000,
+                "value_name2": 6000,
+                "value_name3": 1000
             },
         ]
     };
 
-    const getMoreData = (dataNumber) => {
-        for(let i=5; i<dataNumber; i++){
-            let tempObj = {};
-            let min = 3000;
-            let max = 20000;
-            let rand = Math.floor(min + Math.random() * (max - min));
-            tempObj['id_name'] = "Valor " + i;
-            tempObj['value_name'] = rand;
-            data.data.push(tempObj);
-        }
-    }
-    getMoreData(8);
 
     const userID = 1;
-    const identifier = ['page_name', 1, userID]; // Identifier Array, args: Page Name, ID, User ID
+    const identifier = ['page_name', 2, userID]; // Identifier Array, args: Page Name, ID, User ID
     return (
       <div>
           

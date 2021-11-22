@@ -3,7 +3,7 @@
 
 //  Local Imports
 //  Local Imports -> Graphic
-import AreaPlotRecharts from "../libraries/recharts/AreaPlot";
+import BarPlotRecharts from "../libraries/recharts/BarPlot";
 //  Local Imports -> Utils
 import { WAITING_ADAPT } from "../utils/text/TextInfo-pt";
 import { drawerOptions } from "../utils/options/OptionsDrawer";
@@ -14,7 +14,6 @@ import { getLegendOptions } from "../utils/options/DrawerSegments/OptionsLegend"
 import { getAxesOptions } from "../utils/options/DrawerSegments/OptionsAxes";
 import { getMarginOptions } from "../utils/options/DrawerSegments/OptionsMargin";
 import { getColorOptions } from "../utils/options/DrawerSegments/OptionsColor";
-import { getPercentOptions } from "../utils/options/DrawerSegments/OptionsPercent";
 import { getToolsOptions } from "../utils/options/DrawerSegments/OptionsTools";
 
 import { VALUE_GRID, VALUE_GRID_HORIZONTAL, VALUE_GRID_VERTICAL, VALUE_GRID_STROKE, VALUE_GRID_OPACITY,
@@ -28,7 +27,7 @@ import React from "react";
 //  External Imports -> Material UI
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-export default class AreaPlotComponent extends React.Component{
+export default class MultiBarPlotComponent extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -36,10 +35,9 @@ export default class AreaPlotComponent extends React.Component{
                 invert_axes: false,
                 //  General
                 height: VALUE_HEIGHT,
-                interpolation: 0,
-                // Percent
-                percent: false,
-                decimal_percent: 2,
+                // Multi
+                grouped: true,
+                stacked: false,
                 //  General -> Y axis
                 yTick: VALUE_YTICK,
                 simplify: VALUE_SIMPLIFY,
@@ -70,7 +68,7 @@ export default class AreaPlotComponent extends React.Component{
                 margin_top: VALUE_MARGIN_TOP,
                 margin_bottom: VALUE_MARGIN_BOTTTOM,
                 margin_left: VALUE_MARGIN_LEFT,
-                margin_right: VALUE_MARGIN_RIGHT+15,
+                margin_right: VALUE_MARGIN_RIGHT,
                 //  Extra
                 brush: false
             },
@@ -87,7 +85,6 @@ export default class AreaPlotComponent extends React.Component{
 
             //  Data 
             data: [...this.props.data.data],
-
             //  Change Counter
             oldCounter: 0,
             counter: 0,
@@ -106,6 +103,7 @@ export default class AreaPlotComponent extends React.Component{
 
     componentDidMount(){
         //this.interval = setInterval(() => this.submitOptions(), SAVE_TIMER); //   DB CYCLE CHECK
+        
     }
 
     submitOptions = () => {
@@ -120,15 +118,14 @@ export default class AreaPlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,false,false,false,false)}
-                            {getAxesOptions(this,true,true,true)}
+                            {getGeneralOptions(this,false,false,false,true,true)}
+                            {getAxesOptions(this,true,false,true)}
                             {getToolsOptions(this)}
-                            {getPercentOptions(this)}
                             {getLabelListOptions(this, true)}
-                            {getLegendOptions(this,false)}
+                            {getLegendOptions(this, false)}
                             {getGridOptions(this)}
                             {getMarginOptions(this)}
-                            {getColorOptions(this,1,true)}
+                            {getColorOptions(this,this.props.data.header.value.length,true)}
            
         </React.Fragment>;
         return drawerOptions(this, this.props.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
@@ -145,10 +142,10 @@ export default class AreaPlotComponent extends React.Component{
         if(this.state.needAdapt) {
             content = <div>{WAITING_ADAPT}<LinearProgress/></div>;
         } else {
-            content = <AreaPlotRecharts 
+            content = <BarPlotRecharts 
                         data={this.state.data} 
                         header={this.props.data.header}
-                        options={this.state.options}
+                        options={this.state.options} 
                         colors={this.state.colors}
             />;
         }

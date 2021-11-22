@@ -3,7 +3,7 @@
 
 //  Local Imports
 //  Local Imports -> Graphic
-import AreaPlotRecharts from "../libraries/recharts/AreaPlot";
+import { SideBySideBar } from "../libraries/recharts/SideBySideBar";
 //  Local Imports -> Utils
 import { WAITING_ADAPT } from "../utils/text/TextInfo-pt";
 import { drawerOptions } from "../utils/options/OptionsDrawer";
@@ -28,15 +28,16 @@ import React from "react";
 //  External Imports -> Material UI
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-export default class AreaPlotComponent extends React.Component{
+export default class SideBySideBarComponent extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             options: {
-                invert_axes: false,
                 //  General
                 height: VALUE_HEIGHT,
                 interpolation: 0,
+                dots: true,
+                lineStroke: 1,
                 // Percent
                 percent: false,
                 decimal_percent: 2,
@@ -120,15 +121,15 @@ export default class AreaPlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,false,false,false,false)}
-                            {getAxesOptions(this,true,true,true)}
+                            {getGeneralOptions(this,true,true,false,false,false)}
+                            {getAxesOptions(this,true,true)}
                             {getToolsOptions(this)}
                             {getPercentOptions(this)}
                             {getLabelListOptions(this, true)}
-                            {getLegendOptions(this,false)}
+                            {getLegendOptions(this, false)}
                             {getGridOptions(this)}
                             {getMarginOptions(this)}
-                            {getColorOptions(this,1,true)}
+                            {getColorOptions(this,this.props.data.header.value.length,true)}
            
         </React.Fragment>;
         return drawerOptions(this, this.props.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
@@ -145,7 +146,7 @@ export default class AreaPlotComponent extends React.Component{
         if(this.state.needAdapt) {
             content = <div>{WAITING_ADAPT}<LinearProgress/></div>;
         } else {
-            content = <AreaPlotRecharts 
+            content = <SideBySideBar 
                         data={this.state.data} 
                         header={this.props.data.header}
                         options={this.state.options}

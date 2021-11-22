@@ -5,20 +5,22 @@
 //  Local Imports -> Graphic
 import LinePlotRecharts from "../libraries/recharts/LinePlot";
 //  Local Imports -> Utils
-import { WAITING_ADAPT } from "../utils/text/TextInfo";
+import { WAITING_ADAPT } from "../utils/text/TextInfo-pt";
 import { drawerOptions } from "../utils/options/OptionsDrawer";
-import { getGridOptions } from '../utils/options/OptionsGrid';
-import { getGeneralOptions } from "../utils/options/OptionsGeneral";
-import { getLabelListOptions } from "../utils/options/OptionsLabelList";
-import { getLegendOptions } from "../utils/options/OptionsLegend";
-import { getAxesOptions } from "../utils/options/OptionsAxes";
-import { getMarginOptions } from "../utils/options/OptionsMargin";
-import { getColorOptions } from "../utils/options/OptionsColor";
+import { getGridOptions } from '../utils/options/DrawerSegments/OptionsGrid';
+import { getGeneralOptions } from "../utils/options/DrawerSegments/OptionsGeneral";
+import { getLabelListOptions } from "../utils/options/DrawerSegments/OptionsLabelList";
+import { getLegendOptions } from "../utils/options/DrawerSegments/OptionsLegend";
+import { getAxesOptions } from "../utils/options/DrawerSegments/OptionsAxes";
+import { getMarginOptions } from "../utils/options/DrawerSegments/OptionsMargin";
+import { getColorOptions } from "../utils/options/DrawerSegments/OptionsColor";
+import { getPercentOptions } from "../utils/options/DrawerSegments/OptionsPercent";
+import { getToolsOptions } from "../utils/options/DrawerSegments/OptionsTools";
 
 import { VALUE_GRID, VALUE_GRID_HORIZONTAL, VALUE_GRID_VERTICAL, VALUE_GRID_STROKE, VALUE_GRID_OPACITY,
         VALUE_LABELLIST, VALUE_LABELLIST_POSITION, VALUE_LABELLIST_OFFSET,VALUE_LABELLIST_ANGLE, VALUE_LABELLIST_SIMPLIFY,
         VALUE_LEGEND, VALUE_LEGEND_POS, VALUE_LEGEND_ALIGN, 
-        VALUE_COLOR, VALUE_SIMPLIFY, VALUE_HEIGHT, VALUE_OPACITY, VALUE_YTICK,
+        VALUE_COLOR_OBJ, VALUE_SIMPLIFY, VALUE_HEIGHT, VALUE_OPACITY, VALUE_YTICK,
         VALUE_MARGIN_TOP, VALUE_MARGIN_BOTTTOM, VALUE_MARGIN_LEFT, VALUE_MARGIN_RIGHT} from "../utils/Conf";
 
 //  External Imports
@@ -31,11 +33,15 @@ export default class LinePlotComponent extends React.Component{
         super(props);
         this.state = {
             options: {
+                invert_axes: false,
                 //  General
                 height: VALUE_HEIGHT,
                 interpolation: 0,
                 dots: true,
                 lineStroke: 1,
+                // Percent
+                percent: false,
+                decimal_percent: 2,
                 //  General -> Y axis
                 yTick: VALUE_YTICK,
                 simplify: VALUE_SIMPLIFY,
@@ -59,7 +65,8 @@ export default class LinePlotComponent extends React.Component{
                 grid_opacity: VALUE_GRID_OPACITY,
                 grid_stroke: VALUE_GRID_STROKE,
                 //  Color
-                colors: VALUE_COLOR,
+                colors: [...VALUE_COLOR_OBJ['color']],
+                colors_lock: true,
                 opacity: VALUE_OPACITY,
                 //  Margin
                 margin_top: VALUE_MARGIN_TOP,
@@ -88,7 +95,15 @@ export default class LinePlotComponent extends React.Component{
             counter: 0,
 
             needAdapt: false,
+
+            colors: VALUE_COLOR_OBJ['color']
         };
+    }
+
+    componentDidUpdate(){
+        if(this.state.colors !== VALUE_COLOR_OBJ['color']){
+            this.setState({colors: VALUE_COLOR_OBJ['color']})
+        }
     }
 
     componentDidMount(){
@@ -107,13 +122,15 @@ export default class LinePlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,true)}
-                            {getAxesOptions(this,true,true)}
-                            {getLabelListOptions(this)}
-                            {getLegendOptions(this)}
+                            {getGeneralOptions(this,true,true,false,false,false)}
+                            {getAxesOptions(this,true,true,true)}
+                            {getToolsOptions(this)}
+                            {getPercentOptions(this)}
+                            {getLabelListOptions(this, true)}
+                            {getLegendOptions(this, false)}
                             {getGridOptions(this)}
                             {getMarginOptions(this)}
-                            {getColorOptions(this,1)}
+                            {getColorOptions(this,1,true)}
            
         </React.Fragment>;
         return drawerOptions(this, this.props.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
@@ -134,6 +151,7 @@ export default class LinePlotComponent extends React.Component{
                         data={this.state.data} 
                         header={this.props.data.header}
                         options={this.state.options}
+                        colors={this.state.colors}
             />;
         }
         return content;

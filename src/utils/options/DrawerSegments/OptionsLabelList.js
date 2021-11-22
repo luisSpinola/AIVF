@@ -14,41 +14,46 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Select } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 
-import { changeCheckbox, changeSlider, changeInput, changeSelect } from './OptionsInputs';
+import { changeCheckbox, changeSlider, changeInput, changeSelect } from '../OptionsInputs';
 
-import { SLIDER_SIZE, INPUT_SIZE, L_LABELLIST_OFFSET_MAX, L_LABELLIST_OFFSET_MIN } from '../Conf';
+import { LANGUAGE, LANGUAGE_FILES, SLIDER_SIZE, INPUT_SIZE, SWITCH_PADDING, TOP_PADDING, BOT_PADDING, L_LABELLIST_OFFSET_MAX, L_LABELLIST_OFFSET_MIN } from '../../Conf';
 
-import { ENTER_DELAY, LEAVE_DELAY, TT_LABELLIST, TT_LABELLIST_POS, TT_LABELLIST_OFFSET, TT_LABELLIST_ANGLE, TT_LABELLIST_SIMPLIFY} from '../text/Tooltips';
+import { ENTER_DELAY, LEAVE_DELAY } from '../../text/Tooltips';
 
-export const getLabelListOptions = (self) => {
+export const getLabelListOptions = (self, pos_offset) => {
+    let auto = !self.state.options.labelList;
+    let noOffsetPad;
+    (pos_offset) ? noOffsetPad = {paddingTop:TOP_PADDING,paddingBottom:BOT_PADDING} : noOffsetPad = {paddingBottom:BOT_PADDING};
     return <Accordion>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon/>} id="acor_cor">
                                     <div>
-                                        Valores
-                                        <Tooltip TransitionComponent={Zoom} arrow title={TT_LABELLIST} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>  
-                                            <Switch onClick={(event) => event.stopPropagation()} onFocus={(event) => event.stopPropagation()} onChange={(e) => changeCheckbox(self, e, "labelList")} checked={self.state.options.labelList} color="primary" />
+                                        {LANGUAGE_FILES[LANGUAGE['current']].LABEL_LABELLIST}
+                                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_LABELLIST} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>  
+                                            <Switch size="small" onClick={(event) => event.stopPropagation()} onFocus={(event) => event.stopPropagation()} onChange={(e) => changeCheckbox(self, e, "labelList")} checked={self.state.options.labelList} color="primary" />
                                         </Tooltip>
                                     </div>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <List>
-                                        <Tooltip TransitionComponent={Zoom} arrow title={TT_LABELLIST_POS} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>  
-                                            <FormControlLabel control={<Select style={{width:SLIDER_SIZE+INPUT_SIZE+15}} value={self.state.options.labelList_position} onChange={(e) => changeSelect(self, e,"labelList_position")}>
+
+                                        {pos_offset && <span>
+                                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_LABELLIST_POS} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>  
+                                            <FormControlLabel disabled={auto} style={{paddingBottom:BOT_PADDING}} control={<Select disabled={auto} style={{width:SLIDER_SIZE+INPUT_SIZE+15}} value={self.state.options.labelList_position} onChange={(e) => changeSelect(self, e,"labelList_position")}>
                                                             <MenuItem value={"top"}>Topo</MenuItem>
                                                             <MenuItem value={"bottom"}>Fundo</MenuItem>
                                                             <MenuItem value={"center"}>Centro</MenuItem>
                                                         </Select>}
-                                                label="Posição"
+                                                label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_LABELLIST_POS}
                                                 labelPlacement="top"
                                             />
                                         </Tooltip>
                                         
-                                        <Divider key={'valores_divider_2'}/>
+                                        <Divider/>
 
-                                        <Tooltip TransitionComponent={Zoom} arrow title={TT_LABELLIST_OFFSET} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                            <FormControlLabel control={<Grid container spacing={2} alignItems="center">
+                                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_LABELLIST_OFFSET} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                            <FormControlLabel disabled={auto} style={{paddingTop:TOP_PADDING,paddingBottom:BOT_PADDING}} control={<Grid container spacing={2} alignItems="center">
                                                     <Grid item xs>
-                                                        <Slider style={{width:SLIDER_SIZE}}
+                                                        <Slider disabled={auto} style={{width:SLIDER_SIZE}}
                                                             value={self.state.options.labelList_offset}
                                                             onChange={(e,value) => changeSlider(self,e,value,"labelList_offset")}
                                                             step={1}
@@ -58,24 +63,27 @@ export const getLabelListOptions = (self) => {
                                                         />
                                                     </Grid>
                                                     <Grid item>
-                                                        <Input style={{width:50}}
+                                                        <Input disabled={auto} style={{width:50}}
                                                             value={self.state.options.labelList_offset}
                                                             onChange={(e) => changeInput(self,e,"labelList_offset")}
                                                             inputProps={{ step:1, min:L_LABELLIST_OFFSET_MIN, max: L_LABELLIST_OFFSET_MAX, type: 'number', 'aria-labelledby': 'labelList_offset-slider'}}
                                                         />
                                                     </Grid>
                                                 </Grid>}
-                                                label="Deslocamento"
+                                                label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_LABELLIST_OFFSET}
                                                 labelPlacement="top"
                                             />
                                         </Tooltip>
                                         
-                                        <Divider key={'valores_divider_3'}/>
+                                        <Divider/>
+                                        </span>}
 
-                                        <Tooltip TransitionComponent={Zoom} arrow title={TT_LABELLIST_ANGLE} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                            <FormControlLabel control={<Grid container spacing={2} alignItems="center">
+                                        
+
+                                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_LABELLIST_ANGLE} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                            <FormControlLabel disabled={auto} style={noOffsetPad} control={<Grid container spacing={2} alignItems="center">
                                                     <Grid item xs>
-                                                        <Slider style={{width:SLIDER_SIZE}}
+                                                        <Slider disabled={auto} style={{width:SLIDER_SIZE}}
                                                             value={self.state.options.labelList_angle}
                                                             onChange={(e,value) => changeSlider(self,e,value,"labelList_angle")}
                                                             step={1}
@@ -85,23 +93,23 @@ export const getLabelListOptions = (self) => {
                                                         />
                                                     </Grid>
                                                     <Grid item>
-                                                        <Input style={{width:50}}
+                                                        <Input disabled={auto} style={{width:50}}
                                                             value={self.state.options.labelList_angle}
                                                             onChange={(e) => changeInput(self,e,"labelList_angle")}
                                                             inputProps={{ step:1, min:-90, max: 90, type: 'number', 'aria-labelledby': 'labelList_angle-slider'}}
                                                         />
                                                     </Grid>
                                                 </Grid>}
-                                                label="Ângulo"
+                                                label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_LABELLIST_ANG}
                                                 labelPlacement="top"
                                             />
                                         </Tooltip>
                                         
                                         <Divider key={'valores_divider_31'}/>
 
-                                        <Tooltip TransitionComponent={Zoom} arrow title={TT_LABELLIST_SIMPLIFY} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
-                                            <FormControlLabel control={<Switch onChange={(e) => changeCheckbox(self, e, "labelList_simplify")} checked={self.state.options.labelList_simplify} color="primary" />}
-                                                    label="Simplificar Valores"
+                                        <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_LABELLIST_SIMPLIFY} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                                            <FormControlLabel disabled={auto} style={{paddingLeft: SWITCH_PADDING, paddingTop:TOP_PADDING,paddingBottom:BOT_PADDING}} control={<Switch disabled={auto} size="small" onChange={(e) => changeCheckbox(self, e, "labelList_simplify")} checked={self.state.options.labelList_simplify} color="primary" />}
+                                                    label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_LABELLIST_SIMPLIFY}
                                                     labelPlacement="end"
                                             />
                                         </Tooltip>
