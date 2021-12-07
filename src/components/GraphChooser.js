@@ -6,6 +6,10 @@
 import OneNumerical from "../data_types/OneNumerical";
 import NNumerical from "../data_types/NNumerical";
 import DoubleNumerical from "../data_types/DoubleNumerical";
+import TimeSeries from "../data_types/TimeSeries";
+import GeoDens from "../data_types/GeoDens";
+import GeoQuant from "../data_types/GeoQuant";
+import GeoPathIcon from "../data_types/GeoPathIcon";
 //  Local Imports -> Utils
 import { WAITING_OPTIONS } from "../utils/text/TextInfo-pt";
 
@@ -64,6 +68,34 @@ export default class GraphChooser extends React.Component{
                                 data={this.props.data}
                                 options={this.props.options}
                                 />;
+                case "time_series":
+                    return <TimeSeries 
+                                selected={this.state.selected} 
+                                identifier={this.props.identifier}
+                                data={this.props.data}
+                                options={this.props.options}
+                                />;
+                case "geo_dens":
+                    return <GeoDens
+                                selected={this.state.selected} 
+                                identifier={this.props.identifier}
+                                data={this.props.data}
+                                options={this.props.options}
+                                />;
+                case "geo_quant":
+                    return <GeoQuant
+                                selected={this.state.selected} 
+                                identifier={this.props.identifier}
+                                data={this.props.data}
+                                options={this.props.options}
+                                />;
+                case "geo_path":
+                    return <GeoPathIcon
+                                selected={this.state.selected} 
+                                identifier={this.props.identifier}
+                                data={this.props.data}
+                                options={this.props.options}
+                                />;
                 default:
                     return <div></div>;
             }
@@ -73,7 +105,7 @@ export default class GraphChooser extends React.Component{
     }
 
     parseData = (data) => {
-        let dataArray = [];
+        /*let dataArray = [];
 
         //  data.data
         for(let i=0; i<data.data.length; i++){
@@ -101,12 +133,11 @@ export default class GraphChooser extends React.Component{
         let labelsArray = [""];
         for(let j=0; j<data.header.value.length;j++){
             labelsArray.push(data.header.value[j]);
-        }
+        }*/
 
         this.setState({
             dataType: data.header.type, //  data.header.type
-            data: dataArray,
-            labels: labelsArray
+            //labels: labelsArray
         });
     }
 

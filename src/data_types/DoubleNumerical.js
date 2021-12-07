@@ -1,4 +1,4 @@
-//  One Numerical
+//  Double Numerical
 //  Desc (TODO)
 
 //  Local Imports
@@ -7,12 +7,11 @@ import MultiBarPlotComponent from '../graph_components/MultiBarPlotComponent';
 import MultiLinePlotComponent from '../graph_components/MultiLinePlotComponent';
 import MultiAreaPlotComponent from '../graph_components/MultiAreaPlotComponent';
 import SideBySideBarComponent from '../graph_components/SideBySideBarComponent';
-
+import ScatterPlotComponent from '../graph_components/ScatterPlotComponent';
 //  Local Imports -> Utils
 import { ERROR_SELECTED_DEFAULT } from '../utils/text/TextInfo-pt';
 
 //  External Imports
-//  External Imports -> React
 import React from "react";
 
 export default class DoubleNumerical extends React.Component{
@@ -33,7 +32,7 @@ export default class DoubleNumerical extends React.Component{
                         options={this.props.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             case 1:
-                return <MultiLinePlotComponent 
+                return <ScatterPlotComponent 
                         data={this.props.data} 
                         options={this.props.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;

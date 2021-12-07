@@ -15,7 +15,7 @@ export const BarPlot = (props) => {
 
         let stacked; (props.options.stacked !== undefined) ? stacked = props.options.stacked : stacked = false;
 
-        let axesArray = handleAxes(props.options.invert_axes, props.options.yTick, props.options.simplify, props.options.scale, props.header.id[0]);
+        let axesArray = handleAxes(props.options.invert_axes, props.options.yTick, props.options.simplify, props.options.scale, props.header.id[0], false);
     
         if(grouped) {
             return <ResponsiveContainer width="100%" height={props.options.height}>

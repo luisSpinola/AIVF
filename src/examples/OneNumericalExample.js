@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import GraphChooser from "../components/GraphChooser";
 
-import { Button } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -54,10 +54,11 @@ export default function OneNumericalExample(props) {
     return (
       <div>
           
-            <div style={{ border: "1px solid grey" }}>
-                <Button onClick={() => setOptions(current => !current)} type="button" className="btn btn-tool"> <SettingsIcon/> </Button>
+            <div style={{ paddingLeft: '1rem', boxShadow: '0px 0px 1px 1px rgba(0, 0, 0, 0.2)' }}>
+                <span>One Numerical</span>
+                <IconButton style={{ paddingLeft: '0.4rem'}} onClick={() => setOptions(current => !current)} type="button" className="btn btn-tool"> <SettingsIcon/> </IconButton>
             </div>
-            <div style={{ border: "1px solid grey" }}>
+            <div style={{ boxShadow: '0 1px 8px 0 rgba(0, 0, 0, 0.2)' }}>
                 <GraphChooser data={data} identifier={identifier} options={[options, setOptions]}/>
             </div>
       </div>

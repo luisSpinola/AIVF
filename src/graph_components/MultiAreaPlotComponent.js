@@ -117,8 +117,8 @@ export default class MultiAreaPlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,false,false,true,true)}
-                            {getAxesOptions(this,true,false,true)}
+                            {getGeneralOptions(this,true,false,false,true,true,false)}
+                            {getAxesOptions(this,true,false,true,false)}
                             {getToolsOptions(this)}
                             {getLabelListOptions(this, true)}
                             {getLegendOptions(this,false)}

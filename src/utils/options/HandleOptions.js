@@ -16,9 +16,14 @@ export const handleYAxisOptions = (yTick, simplify, scale) => {
     }
 }
 
-export const handleAxes = (inverted, yTick, simplify, scale, dataKey) => {
+export const handleAxes = (inverted, yTick, simplify, scale, dataKey, reversed) => {
     let tickFormatters;
     (simplify) ? tickFormatters = DataFormater : tickFormatters = undefined;
+
+    let reverse;
+    (reversed) ? reverse = true : reverse = false;
+    let orientation;
+    (reversed) ? orientation = 'right' : orientation = 'left';
 
     let returnArray = [];
     if(!inverted){
@@ -35,16 +40,16 @@ export const handleAxes = (inverted, yTick, simplify, scale, dataKey) => {
         returnArray.push(<XAxis dataKey={dataKey}/>);
         returnArray.push('horizontal');
     } else {
-        returnArray.push(<YAxis dataKey={dataKey} type="category"/>);
+        returnArray.push(<YAxis orientation={orientation} dataKey={dataKey} type="category"/>);
         if(scale === 1){ //  Logarithmic Scale
             returnArray.push(<XAxis type="number" tickCount={yTick} 
                         tickFormatter={tickFormatters}
                         scale="log" 
-                        domain={['auto', 'auto']}
+                        domain={['auto', 'auto']} reversed={reverse}
                         />);
         } else {
             // interval={0}
-            returnArray.push(<XAxis type="number" tickCount={yTick} tickFormatter={tickFormatters}/>);
+            returnArray.push(<XAxis reversed={reverse} type="number" tickCount={yTick} tickFormatter={tickFormatters}/>);
         }
         returnArray.push('vertical');
     }
@@ -164,11 +169,11 @@ export const handleInterpolation = (interpolation) => {
 }
 
 export const DataFormater = (number) => {
-    if(number > 1000000000){
+    if(number >= 1000000000){
         return (number/1000000000).toString() + 'b';
-    } else if(number > 1000000){
+    } else if(number >= 1000000){
         return (number/1000000).toString() + 'm';
-    } else if(number > 1000){
+    } else if(number >= 1000){
         return (number/1000).toString() + 'k';
     } else{
         return number.toString();

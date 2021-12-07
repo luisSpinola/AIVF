@@ -7,7 +7,7 @@ import { ENTER_DELAY, LEAVE_DELAY } from '../../text/Tooltips';
 import { LANGUAGE, LANGUAGE_FILES,SLIDER_SIZE, INPUT_SIZE, L_YTIVK_MAX, L_YTIVK_MIN, SWITCH_PADDING, TOP_PADDING, BOT_PADDING } from '../../Conf';
 import { changeSlider, changeInput, changeCheckbox, changeSelect } from '../OptionsInputs';
 
-export const getAxesOptions = (self, scale, order, invert) => {
+export const getAxesOptions = (self, scale, order, invert, xTick) => {
     let invertPad;
     (invert) ? invertPad = {paddingTop: TOP_PADDING, paddingBottom: BOT_PADDING} : invertPad = {paddingTop: TOP_PADDING}
     return <Accordion>
@@ -41,6 +41,32 @@ export const getAxesOptions = (self, scale, order, invert) => {
                                 labelPlacement="top"
                             />
                         </Tooltip>
+
+                        {xTick && <span><Divider/><Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_XTICK} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                            <FormControlLabel style={{paddingTop: TOP_PADDING, paddingBottom: BOT_PADDING}} control={<Grid container spacing={2} alignItems="center">
+                                    <Grid item xs>
+                                        <Slider style={{width:SLIDER_SIZE}}
+                                            value={self.state.options.xTick}
+                                            onChange={(e,value) => changeSlider(self,e,value,"xTick")}
+                                            step={1}
+                                            min={L_YTIVK_MIN}
+                                            max={L_YTIVK_MAX}
+                                            aria-labelledby="xtick-slider"
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Input style={{width:50}}
+                                            value={self.state.options.xTick}
+                                            margin="dense"
+                                            onChange={(e) => changeInput(self,e,"xTick")}
+                                            inputProps={{ step:1, min:L_YTIVK_MIN, max: L_YTIVK_MAX, type: 'number', 'aria-labelledby': 'xtick-slider'}}
+                                        />
+                                    </Grid>
+                                </Grid>}
+                                label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_XTICK}
+                                labelPlacement="top"
+                            />
+                        </Tooltip></span>}
 
                         <Divider/>
 

@@ -119,8 +119,8 @@ export default class BarPlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,false,false,false, false,false)}
-                            {getAxesOptions(this,true,true,true)}
+                            {getGeneralOptions(this,false,false,false, false,false,false)}
+                            {getAxesOptions(this,true,true,true,false)}
                             {getToolsOptions(this)}
                             {getPercentOptions(this)}
                             {getLabelListOptions(this, true)}

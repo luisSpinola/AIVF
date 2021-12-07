@@ -14,14 +14,13 @@ import { getLegendOptions } from "../utils/options/DrawerSegments/OptionsLegend"
 import { getAxesOptions } from "../utils/options/DrawerSegments/OptionsAxes";
 import { getMarginOptions } from "../utils/options/DrawerSegments/OptionsMargin";
 import { getColorOptions } from "../utils/options/DrawerSegments/OptionsColor";
-import { getPercentOptions } from "../utils/options/DrawerSegments/OptionsPercent";
 import { getToolsOptions } from "../utils/options/DrawerSegments/OptionsTools";
 
 import { VALUE_GRID, VALUE_GRID_HORIZONTAL, VALUE_GRID_VERTICAL, VALUE_GRID_STROKE, VALUE_GRID_OPACITY,
         VALUE_LABELLIST, VALUE_LABELLIST_POSITION, VALUE_LABELLIST_OFFSET,VALUE_LABELLIST_ANGLE, VALUE_LABELLIST_SIMPLIFY,
         VALUE_LEGEND, VALUE_LEGEND_POS, VALUE_LEGEND_ALIGN, 
         VALUE_COLOR_OBJ, VALUE_SIMPLIFY, VALUE_HEIGHT, VALUE_OPACITY, VALUE_YTICK,
-        VALUE_MARGIN_TOP, VALUE_MARGIN_BOTTTOM, VALUE_MARGIN_LEFT, VALUE_MARGIN_RIGHT} from "../utils/Conf";
+        VALUE_MARGIN_TOP, VALUE_MARGIN_BOTTTOM} from "../utils/Conf";
 
 //  External Imports
 import React from "react";
@@ -33,20 +32,13 @@ export default class SideBySideBarComponent extends React.Component{
         super(props);
         this.state = {
             options: {
+                spacing: 7,
                 //  General
                 height: VALUE_HEIGHT,
-                interpolation: 0,
-                dots: true,
-                lineStroke: 1,
-                // Percent
-                percent: false,
-                decimal_percent: 2,
-                //  General -> Y axis
+                //  Y axis
                 yTick: VALUE_YTICK,
                 simplify: VALUE_SIMPLIFY,
                 scale: 0,
-                //  General -> X axis
-                order: 0,
                 //  Legend
                 legend: VALUE_LEGEND,
                 legend_pos: VALUE_LEGEND_POS,
@@ -70,8 +62,8 @@ export default class SideBySideBarComponent extends React.Component{
                 //  Margin
                 margin_top: VALUE_MARGIN_TOP,
                 margin_bottom: VALUE_MARGIN_BOTTTOM,
-                margin_left: VALUE_MARGIN_LEFT,
-                margin_right: VALUE_MARGIN_RIGHT+15,
+                margin_left: 10,
+                margin_right: 15,
                 //  Extra
                 brush: false
             },
@@ -121,10 +113,9 @@ export default class SideBySideBarComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,true,false,false,false)}
-                            {getAxesOptions(this,true,true)}
+                            {getGeneralOptions(this,false,false,false,false,false,true)}
+                            {getAxesOptions(this,true,false,false,false)}
                             {getToolsOptions(this)}
-                            {getPercentOptions(this)}
                             {getLabelListOptions(this, true)}
                             {getLegendOptions(this, false)}
                             {getGridOptions(this)}

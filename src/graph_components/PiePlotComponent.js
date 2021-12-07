@@ -115,7 +115,7 @@ export default class PiePlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,false,false,true,false,false)}
+                            {getGeneralOptions(this,false,false,true,false,false,false)}
                             {getPercentOptions(this)}
                             {getLabelListOptions(this,false)}
                             {getLegendOptions(this, true)}

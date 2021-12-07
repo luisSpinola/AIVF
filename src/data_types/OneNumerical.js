@@ -11,7 +11,6 @@ import PiePlotComponent from '../graph_components/PiePlotComponent';
 import { ERROR_SELECTED_DEFAULT } from '../utils/text/TextInfo-pt';
 
 //  External Imports
-//  External Imports -> React
 import React from "react";
 
 export default class OneNumerical extends React.Component{

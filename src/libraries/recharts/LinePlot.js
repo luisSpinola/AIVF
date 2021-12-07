@@ -13,7 +13,7 @@ const LinePlot = (props) => {
 
         let grouped; (props.options.grouped !== undefined) ? grouped = props.options.grouped : grouped = true;
 
-        let axesArray = handleAxes(props.options.invert_axes, props.options.yTick, props.options.simplify, props.options.scale, props.header.id[0]);
+        let axesArray = handleAxes(props.options.invert_axes, props.options.yTick, props.options.simplify, props.options.scale, props.header.id[0], false);
 
         if(grouped){
             return <ResponsiveContainer width="100%" height={props.options.height}>

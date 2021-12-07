@@ -118,8 +118,8 @@ export default class MultiBarPlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,false,false,false,true,true)}
-                            {getAxesOptions(this,true,false,true)}
+                            {getGeneralOptions(this,false,false,false,true,true,false)}
+                            {getAxesOptions(this,true,false,true, false)}
                             {getToolsOptions(this)}
                             {getLabelListOptions(this, true)}
                             {getLegendOptions(this, false)}

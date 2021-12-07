@@ -4,6 +4,10 @@ import { useState } from 'react';
 import OneNumericalExample from './OneNumericalExample';
 import NNumericalExample from './NNumericalExample';
 import DoubleNumericalExample from './DoubleNumerical';
+import TimeSeriesExample from './TimeSeriesExample';
+import GeoDensExample from './GeoDensExample';
+import GeoQuantExample from './GeoQuantExample';
+import GeoPathIconExample from './GeoPathIconExample';
 
 import { LANGUAGE, VALUE_COLOR_OBJ } from '../utils/Conf';
 
@@ -27,13 +31,12 @@ export default function DashboardExample() {
     return(
         <div>
             <Grid container spacing={2}>
-                <Grid item xs={4} key={"cenas1"}>
-                    
+                <Grid item xs={4}>
                 </Grid>
-                <Grid item xs={4} key={"cenas2"}>
+                <Grid item xs={4}>
                     <GlobalPicker colors={colors} setColors={pushColors}/>
                 </Grid>
-                <Grid item xs={4} key={"cenas3"}>
+                <Grid item xs={4}>
                     <Select style={{width:'16rem'}} value={language} onChange={(e) => changeLanguage(e)}>
                         <MenuItem value={'pt'}>Português</MenuItem>
                         <MenuItem value={'en'}>English</MenuItem>
@@ -41,14 +44,26 @@ export default function DashboardExample() {
                 </Grid>
             </Grid>
             <Grid container spacing={2}>
-                <Grid item xs={6} key={"cenas1"} style={{minWidth:minWidth}}>
+                <Grid item xs={6} style={{minWidth:minWidth}}>
                     <OneNumericalExample/>
                 </Grid>
-                <Grid item xs={6} key={"cenas2"} style={{minWidth:minWidth}}>
+                <Grid item xs={6} style={{minWidth:minWidth}}>
                     <NNumericalExample/>
                 </Grid>
-                <Grid item xs={6} key={"cenas3"} style={{minWidth:minWidth}}>
+                <Grid item xs={6} style={{minWidth:minWidth}}>
                     <DoubleNumericalExample/>
+                </Grid>
+                <Grid item xs={6} style={{minWidth:minWidth}}>
+                    <TimeSeriesExample/>
+                </Grid>
+                <Grid item xs={3} style={{minWidth:minWidth}}>
+                    <GeoDensExample/>
+                </Grid>
+                <Grid item xs={3} style={{minWidth:minWidth}}>
+                    <GeoQuantExample/>
+                </Grid>
+                <Grid item xs={3} style={{minWidth:minWidth}}>
+                    <GeoPathIconExample/>
                 </Grid>
             </Grid>
         </div>

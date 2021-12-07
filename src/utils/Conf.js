@@ -15,9 +15,27 @@ export const LANGUAGE_FILES = {
 }
 //  Default values for Options -> COLOR
 export const VALUE_COLOR = ['#7dba00','#5594b4','#f7913e','#796662','#423b67','#fa4d56','#570408','#198038'];
-export const VALUE_COLOR_OBJ = {
-    'color': ['#7dba00','#5594b4','#f7913e','#796662','#423b67','#fa4d56','#570408','#198038']};
+export const VALUE_COLOR_OBJ = {'color': ['#7dba00','#5594b4','#f7913e','#796662','#423b67','#fa4d56','#570408','#198038']};
+export const VALUE_COLOR_DENS_OBJ = {'color': ['#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026']};
+//  Maps
+export const MAP_LONG = -8.089343873941827;
+export const MAP_LAT = 39.105266434270845;
+export const MAP_ZOOM = 6.551941083083048;
+export const MAP_PITCH = 20.5;
+export const MAP_BEARING = 0;
+export const MAPBOX_TOKEN = '';
+export const MAP_VECTOR_ARRAY = [
+    ['','',''],
+    ['https://stamen-tiles-a.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.jpg','https://stamen-tiles-b.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.jpg','https://stamen-tiles-c.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.jpg'],
+    ['https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=Y8lta7djzmVvA1VEE9fl'],
+    ['https://a.tile.opentopomap.org/{z}/{x}/{y}.png','https://b.tile.opentopomap.org/{z}/{x}/{y}.png','https://c.tile.opentopomap.org/{z}/{x}/{y}.png'],
+    ['https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Y8lta7djzmVvA1VEE9fl'],
+    ['https://stamen-tiles-a.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg','https://stamen-tiles-b.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg','https://stamen-tiles-c.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg']
+];
 
+export const MAP_CUR_ICON = 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png';
+
+//  ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png'], Free Normal
 
 //  Default values for Options
 export const VALUE_SIMPLIFY = false;
@@ -53,6 +71,8 @@ export const L_LABELLIST_OFFSET_MIN = -50;
 export const L_LABELLIST_OFFSET_MAX = 50;
 export const L_HEIGHT_MIN = 150;
 export const L_HEIGHT_MAX = 600;
+export const L_MAP_HEIGHT_MIN = 150;
+export const L_MAP_HEIGHT_MAX = 1500;
 export const L_YTIVK_MIN = 0;
 export const L_YTIVK_MAX = 20;
 export const L_MARGIN_MIN = -100;

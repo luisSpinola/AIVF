@@ -9,7 +9,7 @@ import { handleOrderChange } from '../HandleOptions';
 
 import { LANGUAGE, LANGUAGE_FILES } from '../../Conf';
 
-export const getGeneralOptions = (self, interpolation, line, order, grouped, stacked) => {
+export const getGeneralOptions = (self, interpolation, line, order, grouped, stacked, spacing) => {
     let hightPad;
     (interpolation || order) ? hightPad = {paddingBottom:BOT_PADDING} : hightPad = {};
 
@@ -129,6 +129,33 @@ export const getGeneralOptions = (self, interpolation, line, order, grouped, sta
                                     labelPlacement="end"
                                 />
                             </Tooltip>
+                        </span>}
+
+                        {spacing && <span> <Divider/>
+                            <Tooltip TransitionComponent={Zoom} arrow title={LANGUAGE_FILES[LANGUAGE['current']].TT_SIDE_SPACING} enterDelay={ENTER_DELAY} leaveDelay={LEAVE_DELAY}>
+                            <FormControlLabel style={{paddingTop: TOP_PADDING}} control={<Grid container spacing={2}>
+                                <Grid item xs>
+                                    <Slider style={{width:SLIDER_SIZE}}
+                                        value={self.state.options.spacing}
+                                        onChange={(e,value) => changeSlider(self,e,value,"spacing")}
+                                        step={1}
+                                        min={0}
+                                        max={30}
+                                        aria-labelledby="spacing-slider"
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Input style={{width:50}}
+                                        value={self.state.options.spacing}
+                                        onChange={(e) => changeInput(self,e,"spacing")}
+                                        inputProps={{ step:1, min:0, max:30, type: 'number', 'aria-labelledby': 'spacing-slider'}}
+                                    />
+                                </Grid>
+                                </Grid>}
+                                label={LANGUAGE_FILES[LANGUAGE['current']].LABEL_SIDE_SPACING}
+                                labelPlacement="top"
+                            />
+                        </Tooltip>
                         </span>}
                         
                     </List>

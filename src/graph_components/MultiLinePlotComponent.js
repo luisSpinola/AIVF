@@ -121,8 +121,8 @@ export default class MultiLinePlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,true,false,true,false)}
-                            {getAxesOptions(this,true,false,true)}
+                            {getGeneralOptions(this,true,true,false,true,false,false)}
+                            {getAxesOptions(this,true,false,true,false)}
                             {getToolsOptions(this)}
                             {getLabelListOptions(this, true)}
                             {getLegendOptions(this, false)}

@@ -44,7 +44,6 @@ export const showOptionsDrawer = (sidebarOpen, selector, options, bigTitle, anch
                     </ListItem>
                     {options}
                 </List>
-                
             </Drawer>
 }
 

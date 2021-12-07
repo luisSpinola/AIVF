@@ -120,8 +120,8 @@ export default class AreaPlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,false,false,false,false)}
-                            {getAxesOptions(this,true,true,true)}
+                            {getGeneralOptions(this,true,false,false,false,false,false)}
+                            {getAxesOptions(this,true,true,true,false)}
                             {getToolsOptions(this)}
                             {getPercentOptions(this)}
                             {getLabelListOptions(this, true)}

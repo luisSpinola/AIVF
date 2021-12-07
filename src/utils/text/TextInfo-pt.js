@@ -8,12 +8,16 @@ export const ERROR_SELECTED_DEFAULT = "Default";
 
 export const OPTIONS_RADIUS_NAME = "Raio";
 
+
+export const LABEL_MAP = "Mapa";
+export const LABEL_XTICK = "Número de valores (x)";
+export const LABEL_SIDE_SPACING = 'Espaçamento';
 export const LABEL_AXES = "Eixos";
 export const LABEL_AXES_INVERT = "Inverter Eixos";
-export const LABEL_XORDER = "Ordem (x)";
-export const LABEL_YSCALE = "Escala (y)";
-export const LABEL_YSIMPLIFY = "Simplicar Valores (y)";
-export const LABEL_YTICK = "Número de valores (y)";
+export const LABEL_XORDER = "Ordem";
+export const LABEL_YSCALE = "Escala";
+export const LABEL_YSIMPLIFY = "Simplificar Valores";
+export const LABEL_YTICK = "Número de valores";
 export const LABEL_GROUPED = "Agrupado";
 export const LABEL_STACKED = "Empilhado";
 export const LABEL_COLOR = "Cor";
@@ -56,8 +60,10 @@ export const LABEL_PIE_ORDER = "Ordem";
 
 
 //  Tooltips
+export const TT_SIDE_SPACING = "";
 export const TT_AXES_INVERT = "";
 export const TT_COLOR_LOCK = "";
+export const TT_XTICK = "Número de valores no eixo do x (depende da largura do gráfico)";
 export const TT_YTICK = "Número de valores no eixo do y (depende da altura do gráfico)";
 export const TT_XINT = "Redução para metade dos valores no eixo do x por cada incrementação";
 export const TT_HEIGHT = "Altura do gráfico (píxeis)";

@@ -1,4 +1,4 @@
-//  One Numerical
+//  N Numerical
 //  Desc (TODO)
 
 //  Local Imports
@@ -6,12 +6,10 @@
 import MultiBarPlotComponent from '../graph_components/MultiBarPlotComponent';
 import MultiLinePlotComponent from '../graph_components/MultiLinePlotComponent';
 import MultiAreaPlotComponent from '../graph_components/MultiAreaPlotComponent';
-
 //  Local Imports -> Utils
 import { ERROR_SELECTED_DEFAULT } from '../utils/text/TextInfo-pt';
 
 //  External Imports
-//  External Imports -> React
 import React from "react";
 
 export default class NNumerical extends React.Component{

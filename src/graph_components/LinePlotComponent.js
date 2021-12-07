@@ -122,8 +122,8 @@ export default class LinePlotComponent extends React.Component{
 
     drawerOptions = () => {
         let options = <React.Fragment key={"drawer-options"}>
-                            {getGeneralOptions(this,true,true,false,false,false)}
-                            {getAxesOptions(this,true,true,true)}
+                            {getGeneralOptions(this,true,true,false,false,false,false)}
+                            {getAxesOptions(this,true,true,true,false)}
                             {getToolsOptions(this)}
                             {getPercentOptions(this)}
                             {getLabelListOptions(this, true)}
