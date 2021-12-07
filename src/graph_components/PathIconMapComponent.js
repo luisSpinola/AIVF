@@ -34,7 +34,7 @@ export default class PathIconMapComponent extends React.Component{
                 //  Color
                 colors: [...VALUE_COLOR_OBJ['color']],
                 colors_lock: true,
-                opacity: 90,
+                opacity: 50,
                 //  Margin
                 margin_top: VALUE_MARGIN_TOP,
                 margin_bottom: VALUE_MARGIN_BOTTTOM,
@@ -43,7 +43,7 @@ export default class PathIconMapComponent extends React.Component{
 
                 //  Map Selection
                 maps: MAP_VECTOR_ARRAY,
-                map: 2,
+                map: 0,
             },
 
             //  Sidebar

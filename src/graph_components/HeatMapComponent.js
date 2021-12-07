@@ -42,7 +42,7 @@ export default class HeatMapComponent extends React.Component{
 
                 //  Map Selection
                 maps: MAP_VECTOR_ARRAY,
-                map: 2,
+                map: 0,
             },
 
             //  Sidebar

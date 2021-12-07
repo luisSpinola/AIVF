@@ -23,13 +23,13 @@ export const MAP_LAT = 39.105266434270845;
 export const MAP_ZOOM = 6.551941083083048;
 export const MAP_PITCH = 20.5;
 export const MAP_BEARING = 0;
-export const MAPBOX_TOKEN = '';
+export const MAPBOX_TOKEN = 'pk.eyJ1IjoiZ2Vvcmdpb3MtdWJlciIsImEiOiJjanZidTZzczAwajMxNGVwOGZrd2E5NG90In0.gdsRu_UeU_uPi9IulBruXA';
 export const MAP_VECTOR_ARRAY = [
     ['','',''],
     ['https://stamen-tiles-a.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.jpg','https://stamen-tiles-b.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.jpg','https://stamen-tiles-c.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.jpg'],
-    ['https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=Y8lta7djzmVvA1VEE9fl'],
+    ['https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=i7PINE5QUYcXJVm3SEBQ','https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=i7PINE5QUYcXJVm3SEBQ','https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=i7PINE5QUYcXJVm3SEBQ'],
     ['https://a.tile.opentopomap.org/{z}/{x}/{y}.png','https://b.tile.opentopomap.org/{z}/{x}/{y}.png','https://c.tile.opentopomap.org/{z}/{x}/{y}.png'],
-    ['https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Y8lta7djzmVvA1VEE9fl','https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Y8lta7djzmVvA1VEE9fl'],
+    ['https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=i7PINE5QUYcXJVm3SEBQ','https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=i7PINE5QUYcXJVm3SEBQ','https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=i7PINE5QUYcXJVm3SEBQ'],
     ['https://stamen-tiles-a.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg','https://stamen-tiles-b.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg','https://stamen-tiles-c.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg']
 ];
 
