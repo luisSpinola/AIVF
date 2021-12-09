@@ -11,31 +11,30 @@ import GeoDens from "../data_types/GeoDens";
 import GeoQuant from "../data_types/GeoQuant";
 import GeoPathIcon from "../data_types/GeoPathIcon";
 //  Local Imports -> Utils
-import { WAITING_OPTIONS } from "../utils/text/TextInfo-pt";
+import { LANGUAGE, LANGUAGE_FILES, API_GRAPH_EXISTS, API_GRAPH_GET, API_GRAPH_CREATE, API_SAVE_TO_DB, API_GET_FROM_DB } from "../utils/Conf";
 
 //  External Imports
 import React from "react";
 //  External Imports -> Material-UI
 import LinearProgress from '@material-ui/core/LinearProgress';
+//  External Imports -> Database
+import Cookies from 'js-cookie';
+import axios from 'axios';
+
+
 export default class GraphChooser extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             isOptionsLoaded: true,
-            dataType: null,
             data: null,
-            labels: null,
             selected: 0,
+            previousOptions: null
         };
     }
 
     componentDidMount(){
-        this.selectedExists();
-        if(this.containsData(this.props.data)) this.parseData(this.props.data);
-    }
-
-    selectedExists = () => {
-        if(this.props.selected !== undefined) this.setState({selected: this.props.selected});  
+        this.getOptions();
     }
 
     containsData = (data) => {
@@ -46,99 +45,90 @@ export default class GraphChooser extends React.Component{
 
     chooseGraph = () => {
         if(this.state.isOptionsLoaded){
-            switch(this.state.dataType){
+            let propsObj = {
+                selected:this.state.selected, 
+                identifier:this.props.identifier,
+                data:this.props.data,
+                options:this.props.options ,
+                previousOptions: this.state.previousOptions,
+                watchOptions: this.watchOptions,
+                getOptions: this.getOptions       
+            }
+            switch(this.props.data.header.type){
                 case "one_numerical":
-                    return <OneNumerical 
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <OneNumerical propsObj={propsObj}/>;
                 case "n_numerical":
-                    return <NNumerical 
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <NNumerical propsObj={propsObj}/>;
                 case "double_numerical":
-                    return <DoubleNumerical 
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <DoubleNumerical propsObj={propsObj}/>;
                 case "time_series":
-                    return <TimeSeries 
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <TimeSeries propsObj={propsObj}/>;
                 case "geo_dens":
-                    return <GeoDens
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <GeoDens propsObj={propsObj}/>;
                 case "geo_quant":
-                    return <GeoQuant
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <GeoQuant propsObj={propsObj}/>;
                 case "geo_path":
-                    return <GeoPathIcon
-                                selected={this.state.selected} 
-                                identifier={this.props.identifier}
-                                data={this.props.data}
-                                options={this.props.options}
-                                />;
+                    return <GeoPathIcon propsObj={propsObj}/>;
                 default:
                     return <div></div>;
             }
         } else {
-            return <div>{WAITING_OPTIONS}<LinearProgress/></div>;
+            return <div>{LANGUAGE_FILES[LANGUAGE['current']].WAITING_OPTIONS}<LinearProgress/></div>;
         }
     }
 
-    parseData = (data) => {
-        /*let dataArray = [];
+    watchOptionsUpdateDB = (userID, pageID, graphID, newGraphOptions, position) => {
+        const csrftoken = Cookies.get('csrftoken');
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json", 'X-CSRFToken': csrftoken },
+            body: JSON.stringify({
+                    id_user: userID,
+                    page_name: pageID, 
+                    page_index: graphID, 
+                    graph_options: newGraphOptions,
+                    selected:position
+            }),
+        };
+        fetch(API_GRAPH_CREATE,requestOptions);
+    }
 
-        //  data.data
-        for(let i=0; i<data.data.length; i++){
-            let tempKey = "";
-            let tempValues = [];
-            let tempElem = [];
-            Object.keys(data.data[i]).forEach(function(key){
-                if(key === data.header.id[0]){
-                    tempKey = data.data[i][key];
+    watchOptions = (options, position) => {
+        if(API_SAVE_TO_DB){
+            axios.get(API_GRAPH_EXISTS + '/' + this.props.identifier[2] + '/' + this.props.identifier[0] + '/' + this.props.identifier[1]).then(response => {
+                if(response.data[0].exists){ // it exists -> replace graph_options (where index === position) with new options
+                    axios.get(API_GRAPH_GET + '/' + this.props.identifier[2] + '/' + this.props.identifier[0] + '/' + this.props.identifier[1]).then(response2 => {
+                        let graph_options = JSON.parse(response2.data[0].graph_options);
+                        graph_options[position] = options;
+                        let graph_options_string = JSON.stringify(graph_options);
+                        this.watchOptionsUpdateDB(this.props.identifier[2], this.props.identifier[0], this.props.identifier[1], graph_options_string, position);
+                    });
+                } else { // does not exist -> create
+                    let graph_options = {};
+                    graph_options[position] = options;
+                    let graph_options_string = JSON.stringify(graph_options);
+                    this.watchOptionsUpdateDB(this.props.identifier[2], this.props.identifier[0], this.props.identifier[1], graph_options_string, position);
                 }
-                for(let j=0; j<data.header.value.length; j++){
-                    if(key === data.header.value[j]){
-                        tempValues.push(data.data[i][key]);
-                    }                
-                }
-            })
-            tempElem.push(tempKey);
-            for(let j=0;j<tempValues.length; j++){
-                tempElem.push(tempValues[j]);
-            }
-            dataArray.push(tempElem);
+            });
         }
+    }
 
-        //  data.header.value
-        let labelsArray = [""];
-        for(let j=0; j<data.header.value.length;j++){
-            labelsArray.push(data.header.value[j]);
-        }*/
-
-        this.setState({
-            dataType: data.header.type, //  data.header.type
-            //labels: labelsArray
-        });
+    getOptions = () => {
+        if(API_GET_FROM_DB){
+            axios.get(API_GRAPH_EXISTS + '/' + this.props.identifier[2] + '/' + this.props.identifier[0] + '/' + this.props.identifier[1]).then(response => {
+                if(response.data[0].exists){
+                    axios.get(API_GRAPH_GET + '/' + this.props.identifier[2] + '/' + this.props.identifier[0] + '/' + this.props.identifier[1]).then(response2 => {
+                        this.setState({
+                            selected: response2.data[0].selected,
+                            previousOptions: response2.data[0].graph_options,
+                            isOptionsLoaded: true
+                        });
+                    });  
+                } else {
+                    this.setState({ isOptionsLoaded: true});
+                }    
+            });
+        }
     }
 
     render(){

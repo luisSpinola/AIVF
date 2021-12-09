@@ -18,7 +18,7 @@ export default class TimeSeries extends React.Component{
         this.state = {
             data: null,
             plots:["Gráfico de Linha", "Gráfico de Área", "Gráfico de Barras"],
-            selected: this.props.selected,
+            selected: this.props.propsObj.selected,
             sidebarPos: 'right'
         };
     }
@@ -28,7 +28,7 @@ export default class TimeSeries extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(!prevProps.options && this.props.options){
+        if(!prevProps.propsObj.options && this.props.propsObj.options){
             this.setState({ sidebarOpen: true});
         }
     }
@@ -36,31 +36,31 @@ export default class TimeSeries extends React.Component{
     orderByDate = () => {
         let tempArray = [];
         let tempElem = [];
-        for(let i=0;i<this.props.data.data.length;i++){
+        for(let i=0;i<this.props.propsObj.data.data.length;i++){
             tempElem = {};
 
-            if(this.props.data.header.time !== undefined){
-                if(this.props.data.header.time.length === 2){
-                    tempElem[this.props.data.header.id] = new Date(this.props.data.data[i][this.props.data.header.id]).toLocaleString("pt-PT", { month: "short" });
-                } else if(this.props.data.header.time.length === 1){
-                    tempElem[this.props.data.header.id] = new Date(this.props.data.data[i][this.props.data.header.id]).toLocaleString("pt-PT", { day : '2-digit'});
+            if(this.props.propsObj.data.header.time !== undefined){
+                if(this.props.propsObj.data.header.time.length === 2){
+                    tempElem[this.props.propsObj.data.header.id] = new Date(this.props.propsObj.data.data[i][this.props.propsObj.data.header.id]).toLocaleString("pt-PT", { month: "short" });
+                } else if(this.props.propsObj.data.header.time.length === 1){
+                    tempElem[this.props.propsObj.data.header.id] = new Date(this.props.propsObj.data.data[i][this.props.propsObj.data.header.id]).toLocaleString("pt-PT", { day : '2-digit'});
                 } else {
-                    tempElem[this.props.data.header.id] = new Date(this.props.data.data[i][this.props.data.header.id]).toLocaleDateString("pt-PT");
+                    tempElem[this.props.propsObj.data.header.id] = new Date(this.props.propsObj.data.data[i][this.props.propsObj.data.header.id]).toLocaleDateString("pt-PT");
                 }
             } else {
-                tempElem[this.props.data.header.id] = new Date(this.props.data.data[i][this.props.data.header.id]).toLocaleDateString("pt-PT");
+                tempElem[this.props.propsObj.data.header.id] = new Date(this.props.propsObj.data.data[i][this.props.propsObj.data.header.id]).toLocaleDateString("pt-PT");
             }
             
 
-            for(let j=0; j<this.props.data.header.value.length; j++){
-                tempElem[this.props.data.header.value[j]] = this.props.data.data[i][this.props.data.header.value[j]];
+            for(let j=0; j<this.props.propsObj.data.header.value.length; j++){
+                tempElem[this.props.propsObj.data.header.value[j]] = this.props.propsObj.data.data[i][this.props.propsObj.data.header.value[j]];
             }
             tempArray.push(tempElem);
         }
 
-        const sortArray = tempArray.sort((a, b) => b[this.props.data.header.id] < a[this.props.data.header.id] ? 1: -1);
+        const sortArray = tempArray.sort((a, b) => b[this.props.propsObj.data.header.id] < a[this.props.propsObj.data.header.id] ? 1: -1);
         let returnArray = [];
-        returnArray['header'] = this.props.data.header;
+        returnArray['header'] = this.props.propsObj.data.header;
         returnArray['data'] = sortArray;
 
         this.setState({
@@ -74,17 +74,17 @@ export default class TimeSeries extends React.Component{
                 case 0:
                     return <MultiLinePlotComponent 
                             data={this.state.data} 
-                            options={this.props.options} 
+                            options={this.props.propsObj.options} 
                             plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
                 case 1:
                     return <MultiAreaPlotComponent 
                             data={this.state.data} 
-                            options={this.props.options} 
+                            options={this.props.propsObj.options} 
                             plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
                 case 2:
                     return <MultiBarPlotComponent 
                             data={this.state.data} 
-                            options={this.props.options} 
+                            options={this.props.propsObj.options} 
                             plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
                 default:
                     return <div>{ERROR_SELECTED_DEFAULT}</div>
@@ -102,7 +102,7 @@ export default class TimeSeries extends React.Component{
         this.setState({
           selected: e.target.value
         });
-        //this.props.getOptions();
+        this.props.propsObj.getOptions();
     }
 
     render(){

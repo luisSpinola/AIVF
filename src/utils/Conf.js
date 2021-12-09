@@ -7,7 +7,16 @@ export const SWITCH_PADDING = '1.3rem';
 export const TOP_PADDING = '1rem';
 export const BOT_PADDING = '1rem';
 
-// Language
+//  Database API
+//  Database API -> Storing individual graph information
+export const API_SAVE_TO_DB = false;
+export const API_GET_FROM_DB = false;
+export const API_GRAPH_EXISTS = ""; // URL: API_GRAPH_EXISTS / UserID / PageID / GraphID
+export const API_GRAPH_GET = "";
+export const API_GRAPH_CREATE = ""; //  Create / Update || URL: API_GRAPH_CREATE
+
+
+//  Language
 export let LANGUAGE = {'current': 'pt'};
 export const LANGUAGE_FILES = {
     'pt': require('./text/TextInfo-pt'),

@@ -4,7 +4,7 @@
 export const WAITING_OPTIONS = "Loading Options ...";
 export const WAITING_ADAPT = "Adapting ...";
 
-export const ERROR_SELECTED_DEFAULT = "Default";
+export const ERROR_SELECTED_DEFAULT = "Error: Default";
 
 export const OPTIONS_RADIUS_NAME = "Radius";
 

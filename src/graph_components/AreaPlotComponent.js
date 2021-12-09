@@ -78,7 +78,7 @@ export default class AreaPlotComponent extends React.Component{
             //  Sidebar
             sidebar: true,
             sidebarOpen: true,
-            sidebarPos: this.props.plotSelection[3],
+            sidebarPos: this.props.propsObj.plotSelection[3],
             sidebarPosOpen: false,
             anchorEl: null,
 
@@ -113,7 +113,7 @@ export default class AreaPlotComponent extends React.Component{
             if(this.state.oldCounter !== this.state.counter){
                 let tempCounter = this.state.counter;
                 this.setState({oldCounter: tempCounter});
-                //this.props.watchOptions(this.state.options, this.props.position); //  SAVE TO DB
+                this.props.propsObj.watchOptions(this.state.options, this.props.propsObj.plotSelection[0]); //  SAVE TO DB
             }
         } 
     }
@@ -131,7 +131,7 @@ export default class AreaPlotComponent extends React.Component{
                             {getColorOptions(this,1,true)}
            
         </React.Fragment>;
-        return drawerOptions(this, this.props.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
+        return drawerOptions(this, this.props.propsObj.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
     }
 
     handleOptions = () => {

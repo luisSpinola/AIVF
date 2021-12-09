@@ -15,7 +15,7 @@ export default class GeoPathIcon extends React.Component{
         super(props);
         this.state = {
             plots:["Mapa de Rotas"],
-            selected: this.props.selected,
+            selected: this.props.propsObj.selected,
             sidebarPos: 'right'
         };
     }
@@ -24,8 +24,8 @@ export default class GeoPathIcon extends React.Component{
         switch(this.state.selected){
             case 0:
                 return <PathIconMapComponent
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             default:
                 return <div>{ERROR_SELECTED_DEFAULT}</div>
@@ -33,11 +33,8 @@ export default class GeoPathIcon extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(!prevProps.options && this.props.options){
+        if(!prevProps.propsObj.options && this.props.propsObj.options){
             this.setState({ sidebarOpen: true});
-        }
-        if(prevProps.data !== this.props.data){
-            console.log("DFFDFD")
         }
     }
 
@@ -49,7 +46,7 @@ export default class GeoPathIcon extends React.Component{
         this.setState({
           selected: e.target.value
         });
-        //this.props.getOptions();
+        this.props.propsObj.getOptions();
     }
 
     render(){

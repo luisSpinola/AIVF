@@ -21,7 +21,8 @@ import { VALUE_GRID, VALUE_GRID_HORIZONTAL, VALUE_GRID_VERTICAL, VALUE_GRID_STRO
         VALUE_LABELLIST, VALUE_LABELLIST_POSITION, VALUE_LABELLIST_OFFSET,VALUE_LABELLIST_ANGLE, VALUE_LABELLIST_SIMPLIFY,
         VALUE_LEGEND, VALUE_LEGEND_POS, VALUE_LEGEND_ALIGN, 
         VALUE_COLOR_OBJ, VALUE_SIMPLIFY, VALUE_HEIGHT, VALUE_OPACITY, VALUE_YTICK,
-        VALUE_MARGIN_TOP, VALUE_MARGIN_BOTTTOM, VALUE_MARGIN_LEFT, VALUE_MARGIN_RIGHT} from "../utils/Conf";
+        VALUE_MARGIN_TOP, VALUE_MARGIN_BOTTTOM, VALUE_MARGIN_LEFT, VALUE_MARGIN_RIGHT,
+        SAVE_TIMER } from "../utils/Conf";
 
 //  External Imports
 import React from "react";
@@ -77,7 +78,7 @@ export default class BarPlotComponent extends React.Component{
             //  Sidebar
             sidebar: true,
             sidebarOpen: true,
-            sidebarPos: this.props.plotSelection[3],
+            sidebarPos: this.props.propsObj.plotSelection[3],
             sidebarPosOpen: false,
             anchorEl: null,
 
@@ -103,16 +104,33 @@ export default class BarPlotComponent extends React.Component{
     }
 
     componentDidMount(){
-        //this.interval = setInterval(() => this.submitOptions(), SAVE_TIMER); //   DB CYCLE CHECK
-        
+        this.loadPreviousOptions();
+        this._ismounted = true;
+        this.interval = setInterval(() => this.submitOptions(), SAVE_TIMER*1000); //   DB CYCLE CHECK
     }
+
+    loadPreviousOptions = () => {
+        if(this.props.propsObj.previousOptions !== null){
+            //  Graph was saved before (atleast one selection of the graph family)
+            let optionsJSON = JSON.parse(this.props.propsObj.previousOptions);
+            if(optionsJSON[this.props.propsObj.plotSelection[0]] !== undefined){
+                //  Was saved before
+            } else { 
+                //  First time saving this selection
+                //  Adapt here
+            }
+        } else {
+            //  User first time seing this graph
+            //  Adapt here
+        }
+    } 
 
     submitOptions = () => {
         if(this._ismounted){
             if(this.state.oldCounter !== this.state.counter){
                 let tempCounter = this.state.counter;
                 this.setState({oldCounter: tempCounter});
-                //this.props.watchOptions(this.state.options, this.props.position); //  SAVE TO DB
+                this.props.propsObj.watchOptions(this.state.options, this.props.propsObj.plotSelection[0]); //  SAVE TO DB
             }
         } 
     }
@@ -130,7 +148,7 @@ export default class BarPlotComponent extends React.Component{
                             {getColorOptions(this,1,true)}
            
         </React.Fragment>;
-        return drawerOptions(this, this.props.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
+        return drawerOptions(this, this.props.propsObj.plotSelection, this.state.sidebarPosOpen, this.state.anchorEl, options, this.state.sidebarOpen, this.state.sidebarPos);
     }
 
     handleOptions = () => {

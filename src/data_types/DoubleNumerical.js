@@ -19,7 +19,7 @@ export default class DoubleNumerical extends React.Component{
         super(props);
         this.state = {
             plots:["Barras Lado a Lado", "Gráfico de Dispersão", "Gráfico de Linha", "Gráfico de Área", "Gráfico de Barras"],
-            selected: this.props.selected,
+            selected: this.props.propsObj.selected,
             sidebarPos: 'right'
         };
     }
@@ -28,29 +28,29 @@ export default class DoubleNumerical extends React.Component{
         switch(this.state.selected){
             case 0:
                 return <SideBySideBarComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             case 1:
                 return <ScatterPlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             
             case 2:
                 return <MultiLinePlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             case 3:
                 return <MultiAreaPlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             case 4:
                 return <MultiBarPlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             default:
                 return <div>{ERROR_SELECTED_DEFAULT}</div>
@@ -58,7 +58,7 @@ export default class DoubleNumerical extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(!prevProps.options && this.props.options){
+        if(!prevProps.propsObj.options && this.props.propsObj.options){
             this.setState({ sidebarOpen: true});
         }
     }
@@ -71,7 +71,7 @@ export default class DoubleNumerical extends React.Component{
         this.setState({
           selected: e.target.value
         });
-        //this.props.getOptions();
+        this.props.propsObj.getOptions();
     }
 
     render(){

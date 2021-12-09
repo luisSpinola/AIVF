@@ -16,7 +16,7 @@ export default class GeoQuant extends React.Component{
         super(props);
         this.state = {
             plots:["Mapa de Colunas", "Mapa de Bolhas"],
-            selected: this.props.selected,
+            selected: this.props.propsObj.selected,
             sidebarPos: 'right'
         };
     }
@@ -25,13 +25,13 @@ export default class GeoQuant extends React.Component{
         switch(this.state.selected){
             case 0:
                 return <ColumnMapComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             case 1:
                 return <BubbleMapComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} 
                         plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
             default:
                 return <div>{ERROR_SELECTED_DEFAULT}</div>
@@ -39,7 +39,7 @@ export default class GeoQuant extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(!prevProps.options && this.props.options){
+        if(!prevProps.propsObj.options && this.props.propsObj.options){
             this.setState({ sidebarOpen: true});
         }
     }
@@ -52,7 +52,7 @@ export default class GeoQuant extends React.Component{
         this.setState({
           selected: e.target.value
         });
-        //this.props.getOptions();
+        this.props.propsObj.getOptions();
     }
 
     render(){

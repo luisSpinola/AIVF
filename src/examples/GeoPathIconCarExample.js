@@ -72,7 +72,8 @@ export default class GeoPathIconCarExample extends React.Component{
                 "Route3": [],
             },
             options: false,
-            normalizeValue: 200
+            normalizeValue: 200,
+            identifier: ['page_name', 7, 1] // Identifier Array, args: Page Name, ID, User ID
         };
     }
 
@@ -132,7 +133,7 @@ export default class GeoPathIconCarExample extends React.Component{
             <div>
           
                 <div style={{ paddingLeft: '1rem', boxShadow: '0px 0px 1px 1px rgba(0, 0, 0, 0.2)' }}>
-                    <span>Geo Path/Icon</span>
+                    <span>Geo Path</span>
                     <IconButton style={{ paddingLeft: '0.4rem'}} onClick={() => this.setOptions()} type="button" className="btn btn-tool"> <SettingsIcon/> </IconButton>
                 </div>
                 <div style={{ boxShadow: '0 1px 8px 0 rgba(0, 0, 0, 0.2)' }}>
@@ -141,12 +142,11 @@ export default class GeoPathIconCarExample extends React.Component{
                         size="small"
                         defaultValue={0}
                         aria-label="Small"
-                        valueLabelDisplay="auto"
                         step={1}
                         min={0}
                         max={this.state.normalizeValue}
                     />
-                    <GraphChooser data={this.state.data} identifier={this.props.identifier} options={[this.state.options, this.setOptions]}/>
+                    <GraphChooser data={this.state.data} identifier={this.state.identifier} options={[this.state.options, this.setOptions]}/>
                 </div>
             </div>
         )

@@ -8,7 +8,7 @@ import LinePlotComponent from '../graph_components/LinePlotComponent';
 import AreaPlotComponent from '../graph_components/AreaPlotComponent';
 import PiePlotComponent from '../graph_components/PiePlotComponent';
 //  Local Imports -> Utils
-import { ERROR_SELECTED_DEFAULT } from '../utils/text/TextInfo-pt';
+import { LANGUAGE, LANGUAGE_FILES } from "../utils/Conf";
 
 //  External Imports
 import React from "react";
@@ -18,41 +18,43 @@ export default class OneNumerical extends React.Component{
         super(props);
         this.state = {
             plots:["Gráfico de Barras", "Gráfico de Setores", "Gráfico de Linha", "Gráfico de Área"],
-            selected: this.props.selected,
+            selected: this.props.propsObj.selected,
             sidebarPos: 'right'
         };
     }
 
     chooseGraph = () => {
+        let propsObj = {
+            identifier: this.props.propsObj.identifier,
+            watchOptions: this.props.propsObj.watchOptions,
+            previousOptions: this.props.propsObj.previousOptions,
+            plotSelection:[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]
+        }
         switch(this.state.selected){
             case 0:
-                return <BarPlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
-                        plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
+                return <BarPlotComponent propsObj={propsObj}
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} />;
             case 1:
-                return <PiePlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
-                        plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
+                return <PiePlotComponent propsObj={propsObj}
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} />;
            
             case 2:
-                return <LinePlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
-                        plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;
+                return <LinePlotComponent propsObj={propsObj}
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} />;
             case 3:
-                return <AreaPlotComponent 
-                        data={this.props.data} 
-                        options={this.props.options} 
-                        plotSelection={[this.state.selected, this.state.plots, this.changeSelected, this.state.sidebarPos, this.changeDrawerPos]}/>;       
+                return <AreaPlotComponent propsObj={propsObj}
+                        data={this.props.propsObj.data} 
+                        options={this.props.propsObj.options} />;       
             default:
-                return <div>{ERROR_SELECTED_DEFAULT}</div>
+                return <div>{LANGUAGE_FILES[LANGUAGE['current']].ERROR_SELECTED_DEFAULT}</div>
         }
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(!prevProps.options && this.props.options){
+        if(!prevProps.propsObj.options && this.props.propsObj.options){
             this.setState({ sidebarOpen: true});
         }
     }
@@ -65,7 +67,7 @@ export default class OneNumerical extends React.Component{
         this.setState({
           selected: e.target.value
         });
-        //this.props.getOptions();
+        this.props.propsObj.getOptions();
     }
 
     render(){
