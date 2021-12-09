@@ -36,6 +36,9 @@ export default class GeoPathIcon extends React.Component{
         if(!prevProps.options && this.props.options){
             this.setState({ sidebarOpen: true});
         }
+        if(prevProps.data !== this.props.data){
+            console.log("DFFDFD")
+        }
     }
 
     changeDrawerPos = (value) => {

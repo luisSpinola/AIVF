@@ -1,15 +1,12 @@
 import { TileLayer } from '@deck.gl/geo-layers';
-import { BitmapLayer, PathLayer, ColumnLayer, ScatterplotLayer, IconLayer } from '@deck.gl/layers';
+import { BitmapLayer, PathLayer, ColumnLayer, ScatterplotLayer} from '@deck.gl/layers';
 import { HeatmapLayer, HexagonLayer } from '@deck.gl/aggregation-layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import hexRgb from 'hex-rgb';
-import { MAP_CUR_ICON } from '../Conf';
 
 import pointer from './../assets/pointer3d.glb';
 import pointer2 from './../assets/pointer3d1.glb';
-const ICON_MAPPING = {
-    marker: {x: 0, y: 0, width: 128, height: 128, mask: true}
-};
+import car from './../assets/car.glb';
 
 export const mapVector = (vectorArray, mapOption) => {
     return new TileLayer({
@@ -49,6 +46,54 @@ export const mapVector = (vectorArray, mapOption) => {
     })
 }
 
+export const getVehicleLayer = (data,colors, hoverIndex) => {
+
+    function getBearingForOrientation(d){
+        let returnArray = [];
+        let coord1 =  d.coordsI; // lng, lat
+        let coord2 =  d.coordsF;
+
+        let deltaL = coord2[0] - coord1[0];
+        let xVar = Math.cos(coord2[1]*Math.PI/180) * Math.sin(deltaL*Math.PI/180);
+        let yVar = Math.cos(coord1[1] * Math.PI/180) * Math.sin(coord2[1]*Math.PI/180) - Math.sin(coord1[1]*Math.PI/180) * Math.cos(coord2[1]*Math.PI/180) * Math.cos(deltaL*Math.PI/180);
+
+        let bearing = Math.atan2(xVar,yVar);
+        let turnAngle = bearing * (180/Math.PI)
+        returnArray = [0,(-270-turnAngle),90];
+        return returnArray;
+    }
+
+    function getColor(d){
+        for(let i=0; i<data.header.value.length; i++){
+            if(d[data.header.value[i]] !== undefined){
+                return [colors[i][0],colors[i][1],colors[i][2],255];
+            }
+        }
+        return [0,0,0,255]; // ERROR
+    }
+
+    let returnArray = []
+    let newLayer = new ScenegraphLayer({
+        id: 'scenegraph-layer-cars',
+        data: data.vehicle,
+        pickable: true,
+        scenegraph: car,
+        getPosition: d => d.coordsF,
+        getTranslation: [0,0,2750],
+        getOrientation: d => getBearingForOrientation(d),
+        getColor: d => getColor(d),
+        sizeScale: 2000,
+        _lighting: 'pbr',
+        updateTriggers: {
+            getColor: d => getColor(d),
+            getPosition: d => d.coordsF,
+            getOrientation: d => getBearingForOrientation(d)
+        },
+    });
+
+    returnArray.push(newLayer);
+    return returnArray;
+}
 
 export const getPathMapLayer = (data, colors, hoverIndex, setHoverIndex) => {
     let returnArray = [];
@@ -115,7 +160,10 @@ export const getPathMapLayer = (data, colors, hoverIndex, setHoverIndex) => {
         getOrientation: [0,0,90],
         getColor: d => getColor(d),
         sizeScale: 25,
-        _lighting: 'pbr'
+        _lighting: 'pbr',
+        updateTriggers: {
+            getColor: d => getColor(d),
+        },
     });
     returnArray.push(newtempElem);
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StaticMap, MapContext, NavigationControl } from 'react-map-gl';
 import DeckGL from 'deck.gl';
-import { mapVector, getHeatMapLayer, getColorsInHex, getHexMapLayer, getColumnMapLayer, getBubbleMapLayer, getPathMapLayer, getIconMapLayer } from '../../utils/options/DeckGlLayers';
+import { mapVector, getHeatMapLayer, getColorsInHex, getHexMapLayer, getColumnMapLayer, getBubbleMapLayer, getPathMapLayer, getVehicleLayer } from '../../utils/options/DeckGlLayers';
 
 import { MAP_BEARING, MAP_LAT, MAP_LONG, MAP_PITCH, MAP_ZOOM, MAPBOX_TOKEN } from '../../utils/Conf';
 
@@ -78,7 +78,12 @@ export const LayersMap = (props) => {
     if(props.type === 'hex') layers.push(getHexMapLayer(props.data.data, colors));
     if(props.type === 'column') layers.push(getColumnMapLayer(props.data, colors, hoverIndex, setHoverIndex));
     if(props.type === 'bubble') layers.push(getBubbleMapLayer(props.data, colors, hoverIndex, setHoverIndex)); 
-    if(props.type === 'path') layers.push(getPathMapLayer(props.data, colors, hoverIndex, setHoverIndex));
+    if(props.type === 'path') {
+        layers.push(getPathMapLayer(props.data, colors, hoverIndex, setHoverIndex));
+        if(props.data.vehicle !== undefined){
+            layers.push(getVehicleLayer(props.data, colors));
+        }
+    }
     //if(props.type === 'path') {layers.push(getIconMapLayer(props.data, colors)[1]);layers.push(getIconMapLayer(props.data, colors)[0]) ;}
 
     const [viewState, setViewState] = useState({

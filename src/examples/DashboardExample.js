@@ -7,7 +7,7 @@ import DoubleNumericalExample from './DoubleNumerical';
 import TimeSeriesExample from './TimeSeriesExample';
 import GeoDensExample from './GeoDensExample';
 import GeoQuantExample from './GeoQuantExample';
-import GeoPathIconExample from './GeoPathIconExample';
+import GeoPathIconCarExample from './GeoPathIconCarExample';
 
 import { LANGUAGE, VALUE_COLOR_OBJ } from '../utils/Conf';
 
@@ -62,8 +62,8 @@ export default function DashboardExample() {
                 <Grid item xs={3} style={{minWidth:minWidth}}>
                     <GeoQuantExample/>
                 </Grid>
-                <Grid item xs={3} style={{minWidth:minWidth}}>
-                    <GeoPathIconExample/>
+                <Grid item xs={9} style={{minWidth:minWidth}}>
+                    <GeoPathIconCarExample/>
                 </Grid>
             </Grid>
         </div>
